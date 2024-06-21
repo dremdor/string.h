@@ -1,0 +1,71 @@
+#suite test_s21_memcmp
+
+#test s21_memcmp_zero_byte 
+  s21_size_t nByte = 0;
+  char dataStr1[] = "Hello";
+  char dataStr2[] = "Hello";
+
+  int expected = memcmp(dataStr1, dataStr2, nByte);
+  int actual = s21_memcmp(dataStr1, dataStr2, nByte);
+
+  ck_assert_int_eq(expected, actual);
+
+
+
+#test s21_memcmp_positive_test 
+  s21_size_t nByte = 5;
+  char dataStr1[] = "Hello";
+  char dataStr2[] = "Hello";
+
+  int expected = memcmp(dataStr1, dataStr2, nByte);
+  int actual = s21_memcmp(dataStr1, dataStr2, nByte);
+
+  ck_assert_int_eq(expected, actual);
+
+
+
+#test s21_memcmp_first_more_test 
+  s21_size_t nByte = 5;
+  char dataStr1[] = "Gekko";
+  char dataStr2[] = "Hello";
+
+  int expected = memcmp(dataStr1, dataStr2, nByte);
+  int actual = s21_memcmp(dataStr1, dataStr2, nByte);
+
+  ck_assert_int_eq(expected, actual);
+
+
+
+#test s21_memcmp_second_more_test 
+  s21_size_t nByte = 5;
+  char dataStr1[] = "Hello";
+  char dataStr2[] = "Gekko";
+
+  int expected = memcmp(dataStr1, dataStr2, nByte);
+  int actual = s21_memcmp(dataStr1, dataStr2, nByte);
+
+  ck_assert_int_eq(expected, actual);
+
+
+
+#test s21_memcmp_zero_byte_in_num 
+  s21_size_t nByte = 0;
+  char dataStr1[] = "1234";
+  char dataStr2[] = "1234";
+
+  int expected = memcmp(dataStr1, dataStr2, nByte);
+  int actual = s21_memcmp(dataStr1, dataStr2, nByte);
+
+  ck_assert_int_eq(expected, actual);
+
+
+
+#test s21_memcmp_eq_long_string 
+  s21_size_t nByte = 39;
+  char dataStr1[] = "wugjdklfjgutyjdfghcgg 935923594 ($%@#$";
+  char dataStr2[] = "wugjdklfjgutyjdfghcgg 935923594 ($%@#$";
+
+  int expected = memcmp(dataStr1, dataStr2, nByte);
+  int actual = s21_memcmp(dataStr1, dataStr2, nByte);
+
+  ck_assert_int_eq(expected, actual);
