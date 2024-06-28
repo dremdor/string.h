@@ -1,0 +1,1 @@
+genhtml -o report string.info --rc genhtml_branch_coverage=1
