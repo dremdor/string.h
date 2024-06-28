@@ -26,6 +26,10 @@ Suite *suiteSprintf_int(void);
 Suite *suiteSprintf_char(void);
 Suite *suiteSprintf_float(void);
 Suite *suiteSprintf_string(void);
+Suite *suiteInsert(void);
+Suite *suiteToLower(void);
+Suite *suiteToUpper(void);
+Suite *suiteTrim(void);
 
 void runTests(void);
 void runTestcase(Suite *testcase);

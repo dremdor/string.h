@@ -1,10 +1,11 @@
-LIBRARY 	= s21_string.a
-FUNC_FILES 	= string_functions/s21_*.c
-OBJ			= s21_*.o
-FUNC_TEST	= tests/test_s21_*.c
-OBJ_TEST	= test_s21_*.o
-OUT_TEST	= string_test
-REPORT_FILE = report/index.html
+LIBRARY 			= s21_string.a
+FUNC_FILES 			= string_functions/s21_*.c
+FUNC_CSHARP_FILES	= csharp_functions/s21_*.c
+OBJ					= s21_*.o
+FUNC_TEST			= tests/test_s21_*.c
+OBJ_TEST			= test_s21_*.o
+OUT_TEST			= string_test
+REPORT_FILE 		= report/index.html
 
 UNAME_S := $(shell uname -s)
 
@@ -34,7 +35,7 @@ test: test_file
 	./$(OUT_TEST)
 	$(MAKE) gcov_report
 	-rm -rf *.gc* *.info $(OUT_TEST) $(OBJ_TEST) $(OBJ) $(LIBRARY)
-	open $(REPORT_FILE)
+#	open $(REPORT_FILE)
 
 test_file: s21_string.a_for_test build_test.o
 	$(CC) $(L_FLAGS) $(COVER_FLAG) $(OBJ_TEST) tests/main.c -L. $(LIBRARY) $(OS_SPECIFIC_FLAGS) -o $(OUT_TEST)
@@ -44,10 +45,10 @@ s21_string.a_for_test: build_object_for_test.o
 	rm -fr $(OBJ)
 
 build.o:
-	$(CC) $(CFLAGS) $(FUNC_FILES)
+	$(CC) $(CFLAGS) $(FUNC_FILES) $(FUNC_CSHARP_FILES)
 
 build_object_for_test.o:
-	$(CC) $(CFLAGS) $(COVER_FLAG) $(FUNC_FILES)
+	$(CC) $(CFLAGS) $(COVER_FLAG) $(FUNC_FILES) $(FUNC_CSHARP_FILES)
 
 build_test.o:
 	$(CC) $(CFLAGS) $(FUNC_TEST)

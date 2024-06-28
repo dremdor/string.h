@@ -27,7 +27,7 @@ int s21_sprintf(char *str, const char *format, ...) {
   va_start(args, format);
   int print_index = 0;
   for (s21_size_t i = 0; format[i] != '\0'; ++i) {
-    char buffer[1024] = "";
+    char buffer[SIZE] = "";
     if (format[i] == '%' && specs.spec_on == 0) {
       specs.spec_on = 1;
     } else if (format[i] == '+' && specs.spec_on == 1) {
@@ -118,7 +118,7 @@ void parse_int(char *buffer, int number, Specs specs) {
 }
 
 void add_spaces_to_int(char *buffer, Specs specs) {
-  char temp[1024] = "";
+  char temp[SIZE] = "";
   int place_index = 0;
   int len = (int)s21_strlen(buffer);
   s21_strncpy(temp, buffer, len);
@@ -182,6 +182,23 @@ void str_from_double(char *buffer, int *buffer_index, double number,
     buffer[*buffer_index] = '0' + digit;
     ++(*buffer_index);
     div -= digit;
+  }
+
+  if ((int)(div * 10) >= 5) {
+    int i = *buffer_index - 1;
+    while (i >= 0 && buffer[i] == '9') {
+      buffer[i] = '0';
+      --i;
+    }
+    if (i >= 0) {
+      buffer[i] += 1;
+    } else {
+      for (int j = *buffer_index; j > 0; --j) {
+        buffer[j] = buffer[j - 1];
+      }
+      buffer[0] = '1';
+      ++(*buffer_index);
+    }
   }
   buffer[*buffer_index] = '\0';
 }
