@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2024-06-28 18:47:10</td>
+            <td class="headerValue">2024-06-29 09:24:44</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -49,9 +49,9 @@
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntryMed">82.4&nbsp;%</td>
-            <td class="headerCovTableEntry">148</td>
-            <td class="headerCovTableEntry">122</td>
+            <td class="headerCovTableEntryMed">82.0&nbsp;%</td>
+            <td class="headerCovTableEntry">150</td>
+            <td class="headerCovTableEntry">123</td>
           </tr>
                   <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -118,8 +118,8 @@
 <span id="L46"><span class="lineNum">      46</span>                 :<span class="tlaGNC">          12 :       s21_strncpy(str + print_index, buffer, s21_strlen(buffer));</span></span>
 <span id="L47"><span class="lineNum">      47</span>                 :<span class="tlaGNC">          12 :       print_index += s21_strlen(buffer);</span></span>
 <span id="L48"><span class="lineNum">      48</span>                 :<span class="tlaGNC">          12 :       specs.spec_on = 0;</span></span>
-<span id="L49"><span class="lineNum">      49</span>   [<span class="tlaGBC" title="Branch 0 was taken 1045 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 123 times"> + </span><span class="tlaUNC" title="Branch 2 was not taken"> - </span><span class="tlaGBC" title="Branch 3 was taken 1045 times"> + </span> :<span class="tlaGNC">        1168 :     } else if ((format[i] == 'd' || format[i] == 'u') &amp;&amp; specs.spec_on == 1) {</span></span>
-<span class="lineNum">        </span>          <span class="tlaGBC" title="Branch 4 was taken 33 times"> + </span><span class="tlaGBC" title="Branch 5 was taken 90 times"> + </span>]
+<span id="L49"><span class="lineNum">      49</span>   [<span class="tlaGBC" title="Branch 0 was taken 1045 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 123 times"> + </span><span class="tlaGBC" title="Branch 2 was taken 1045 times"> + </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span> :<span class="tlaGNC">        1168 :     } else if ((format[i] == 'd' || format[i] == 'u' || format[i] == 'i') &amp;&amp; specs.spec_on == 1) {</span></span>
+<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not taken"> - </span><span class="tlaGBC" title="Branch 5 was taken 1045 times"> + </span><span class="tlaGBC" title="Branch 6 was taken 33 times"> + </span><span class="tlaGBC" title="Branch 7 was taken 90 times"> + </span>]
 <span id="L50"><span class="lineNum">      50</span>                 :<span class="tlaGNC">          33 :       parse_int(buffer, va_arg(args, int), specs);</span></span>
 <span id="L51"><span class="lineNum">      51</span>                 :<span class="tlaGNC">          33 :       s21_strncpy(str + print_index, buffer, s21_strlen(buffer));</span></span>
 <span id="L52"><span class="lineNum">      52</span>                 :<span class="tlaGNC">          33 :       print_index += s21_strlen(buffer);</span></span>
@@ -222,14 +222,14 @@
 <span id="L149"><span class="lineNum">     149</span>                 :             :     }</span>
 <span id="L150"><span class="lineNum">     150</span>                 :<span class="tlaGNC">          58 :     char p[50] = &quot;&quot;;</span></span>
 <span id="L151"><span class="lineNum">     151</span>                 :<span class="tlaGNC">          58 :     int index = 0;</span></span>
-<span id="L152"><span class="lineNum">     152</span>         [<span class="tlaGBC" title="Branch 0 was taken 176 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 58 times"> + </span>]:<span class="tlaGNC">         234 :     while (number != 0) {</span></span>
-<span id="L153"><span class="lineNum">     153</span>                 :<span class="tlaGNC">         176 :       p[index] = (number % 10) + '0';</span></span>
-<span id="L154"><span class="lineNum">     154</span>                 :<span class="tlaGNC">         176 :       number /= 10;</span></span>
-<span id="L155"><span class="lineNum">     155</span>                 :<span class="tlaGNC">         176 :       ++index;</span></span>
+<span id="L152"><span class="lineNum">     152</span>         [<span class="tlaGBC" title="Branch 0 was taken 164 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 58 times"> + </span>]:<span class="tlaGNC">         222 :     while (number != 0) {</span></span>
+<span id="L153"><span class="lineNum">     153</span>                 :<span class="tlaGNC">         164 :       p[index] = (number % 10) + '0';</span></span>
+<span id="L154"><span class="lineNum">     154</span>                 :<span class="tlaGNC">         164 :       number /= 10;</span></span>
+<span id="L155"><span class="lineNum">     155</span>                 :<span class="tlaGNC">         164 :       ++index;</span></span>
 <span id="L156"><span class="lineNum">     156</span>                 :             :     }</span>
-<span id="L157"><span class="lineNum">     157</span>         [<span class="tlaGBC" title="Branch 0 was taken 176 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 58 times"> + </span>]:<span class="tlaGNC">         234 :     for (int i = index - 1; i &gt;= 0; --i) {</span></span>
-<span id="L158"><span class="lineNum">     158</span>                 :<span class="tlaGNC">         176 :       buffer[*buffer_index] = p[i];</span></span>
-<span id="L159"><span class="lineNum">     159</span>                 :<span class="tlaGNC">         176 :       ++(*buffer_index);</span></span>
+<span id="L157"><span class="lineNum">     157</span>         [<span class="tlaGBC" title="Branch 0 was taken 164 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 58 times"> + </span>]:<span class="tlaGNC">         222 :     for (int i = index - 1; i &gt;= 0; --i) {</span></span>
+<span id="L158"><span class="lineNum">     158</span>                 :<span class="tlaGNC">         164 :       buffer[*buffer_index] = p[i];</span></span>
+<span id="L159"><span class="lineNum">     159</span>                 :<span class="tlaGNC">         164 :       ++(*buffer_index);</span></span>
 <span id="L160"><span class="lineNum">     160</span>                 :             :     }</span>
 <span id="L161"><span class="lineNum">     161</span>                 :<span class="tlaGNC">          58 :     buffer[*buffer_index] = '\0';</span></span>
 <span id="L162"><span class="lineNum">     162</span>                 :             :   }</span>

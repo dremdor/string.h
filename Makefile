@@ -35,7 +35,7 @@ test: test_file
 	./$(OUT_TEST)
 	$(MAKE) gcov_report
 	-rm -rf *.gc* *.info $(OUT_TEST) $(OBJ_TEST) $(OBJ) $(LIBRARY)
-#	open $(REPORT_FILE)
+	open $(REPORT_FILE)
 
 test_file: s21_string.a_for_test build_test.o
 	$(CC) $(L_FLAGS) $(COVER_FLAG) $(OBJ_TEST) tests/main.c -L. $(LIBRARY) $(OS_SPECIFIC_FLAGS) -o $(OUT_TEST)

@@ -46,7 +46,7 @@ int s21_sprintf(char *str, const char *format, ...) {
       s21_strncpy(str + print_index, buffer, s21_strlen(buffer));
       print_index += s21_strlen(buffer);
       specs.spec_on = 0;
-    } else if ((format[i] == 'd' || format[i] == 'u') && specs.spec_on == 1) {
+    } else if ((format[i] == 'd' || format[i] == 'u' || format[i] == 'i') && specs.spec_on == 1) {
       parse_int(buffer, va_arg(args, int), specs);
       s21_strncpy(str + print_index, buffer, s21_strlen(buffer));
       print_index += s21_strlen(buffer);
