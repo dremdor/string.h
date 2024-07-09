@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../string_functions/s21_string.h"
+#include "../s21_string.h"
 
 Suite *suiteMemchr(void);
 Suite *suiteMemcmp(void);
@@ -23,6 +23,7 @@ Suite *suiteStrrchr(void);
 Suite *suiteStrstr(void);
 Suite *suiteStrtok(void);
 Suite *suiteSprintf_int(void);
+Suite *suiteSprintf_int_u(void);
 Suite *suiteSprintf_char(void);
 Suite *suiteSprintf_float(void);
 Suite *suiteSprintf_string(void);

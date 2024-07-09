@@ -35,7 +35,15 @@ test: test_file
 	./$(OUT_TEST)
 	$(MAKE) gcov_report
 	-rm -rf *.gc* *.info $(OUT_TEST) $(OBJ_TEST) $(OBJ) $(LIBRARY)
-	open $(REPORT_FILE)
+#	open $(REPORT_FILE)
+
+leaks_test: test_file
+	leaks -atExit -- ./$(OUT_TEST)
+	-rm -rf *.gc* *.info $(OUT_TEST) $(OBJ_TEST) $(OBJ) $(LIBRARY)
+
+valgrind_test: test_file
+	valgrind --leak-check=yes ./$(OUT_TEST)
+	-rm -rf *.gc* *.info $(OUT_TEST) $(OBJ_TEST) $(OBJ) $(LIBRARY)
 
 test_file: s21_string.a_for_test build_test.o
 	$(CC) $(L_FLAGS) $(COVER_FLAG) $(OBJ_TEST) tests/main.c -L. $(LIBRARY) $(OS_SPECIFIC_FLAGS) -o $(OUT_TEST)
@@ -59,6 +67,11 @@ gcov_report:
 
 build_o: $(FUNC_FILES)
 	$(CC) $(CFLAGS) $(FUNC_FILES)
+
+clang_format:
+	cp ../materials/linters/.clang-format .clang-format
+	clang-format -i $(FUNC_FILES) $(FUNC_CSHARP_FILES) $(FUNC_TEST) string_functions/*.h tests/*.h tests/main.c
+	rm .clang-format
 
 rebuild: clean all
 

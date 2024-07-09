@@ -1,4 +1,4 @@
-#include "../string_functions/s21_string.h"
+#include "../s21_string.h"
 
 void *s21_trim(const char *src, const char *trim_chars) {
   if (!src) {

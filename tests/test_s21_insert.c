@@ -31,7 +31,20 @@ START_TEST(more_index_test) {
   char dataStr[] = "";
   s21_size_t index = 500;
 
-  char expected[] = "";
+  char *expected = S21_NULL;
+  char *actual = (char *)s21_insert(dataStr, dataInsert, index);
+
+  ck_assert_ptr_eq(expected, actual);
+  if (actual) free(actual);
+}
+END_TEST
+
+START_TEST(middle_word_test) {
+  char dataInsert[] = "World!";
+  char dataStr[] = "Hello";
+  s21_size_t index = 3;
+
+  char expected[] = "HelWorld!lo";
   char *actual = (char *)s21_insert(dataStr, dataInsert, index);
 
   ck_assert_str_eq(expected, actual);
@@ -44,39 +57,39 @@ START_TEST(empty_test) {
   char dataStr[] = "";
   s21_size_t index = 0;
 
-  char expected[] = "";
+  char *expected = S21_NULL;
   char *actual = (char *)s21_insert(dataStr, dataInsert, index);
 
-  ck_assert_str_eq(expected, actual);
+  ck_assert_ptr_eq(expected, actual);
   if (actual) free(actual);
 }
 END_TEST
 
-// START_TEST(null_test) {
-//   char *dataInsert = S21_NULL;
-//   char *dataStr = S21_NULL;
-//   s21_size_t index = 500;
-//
-//   char expected[] = "";
-//   char *actual = (char *)s21_insert(dataStr, dataInsert, index);
-//
-//   ck_assert_str_eq(expected, actual);
-//   if (actual) free(actual);
-// }
-// END_TEST
+START_TEST(null_test) {
+  char *dataInsert = S21_NULL;
+  char *dataStr = S21_NULL;
+  s21_size_t index = 500;
 
-// START_TEST(null_test_2) {
-//   char *dataInsert = S21_NULL;
-//   char dataStr[] = "Hello ";
-//   s21_size_t index = 0;
-//
-//   char expected[] = "Hello ";
-//   char *actual = (char *)s21_insert(dataStr, dataInsert, index);
-//
-//   ck_assert_str_eq(expected, actual);
-//   if (actual) free(actual);
-// }
-// END_TEST
+  char *expected = S21_NULL;
+  char *actual = (char *)s21_insert(dataStr, dataInsert, index);
+
+  ck_assert_ptr_eq(expected, actual);
+  if (actual) free(actual);
+}
+END_TEST
+
+START_TEST(null_test_2) {
+  char *dataInsert = S21_NULL;
+  char dataStr[] = "Hello ";
+  s21_size_t index = 0;
+
+  char *expected = S21_NULL;
+  char *actual = (char *)s21_insert(dataStr, dataInsert, index);
+
+  ck_assert_ptr_eq(expected, actual);
+  if (actual) free(actual);
+}
+END_TEST
 
 Suite *suiteInsert(void) {
   Suite *s = suite_create("suite_insert");
@@ -86,8 +99,9 @@ Suite *suiteInsert(void) {
   tcase_add_test(tc, positive_test_2);
   tcase_add_test(tc, more_index_test);
   tcase_add_test(tc, empty_test);
-  //  tcase_add_test(tc, null_test);
-  //  tcase_add_test(tc, null_test_2);
+  tcase_add_test(tc, middle_word_test);
+  tcase_add_test(tc, null_test);
+  tcase_add_test(tc, null_test_2);
 
   suite_add_tcase(s, tc);
   return s;

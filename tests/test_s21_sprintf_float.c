@@ -170,7 +170,7 @@ START_TEST(minus2_zero_float) {
   char expected[SIZE];
   char actual[SIZE];
 
-  char *format = "Hello World %-2d";
+  char *format = "Hello World %-2f";
   float dataOutput = 0;
 
   int expectedInt = sprintf(expected, format, dataOutput);
@@ -185,7 +185,7 @@ START_TEST(minus2_float) {
   char expected[SIZE];
   char actual[SIZE];
 
-  char *format = "Hello World %-2d";
+  char *format = "Hello World %-2f";
   float dataOutput = 355.3456789;
 
   int expectedInt = sprintf(expected, format, dataOutput);
@@ -200,7 +200,7 @@ START_TEST(minus2_min_float) {
   char expected[SIZE];
   char actual[SIZE];
 
-  char *format = "Hello World %-2d";
+  char *format = "Hello World %-2f";
   float dataOutput = -355.3456789;
 
   int expectedInt = sprintf(expected, format, dataOutput);
@@ -381,7 +381,22 @@ START_TEST(precision_float) {
   char actual[SIZE];
 
   char *format = "Hello World %.f";
-  float dataOutput = 5.5;
+  float dataOutput = 777.5;
+
+  int expectedInt = sprintf(expected, format, dataOutput);
+  int actualInt = s21_sprintf(actual, format, dataOutput);
+
+  ck_assert_str_eq(expected, actual);
+  ck_assert_int_eq(expectedInt, actualInt);
+}
+END_TEST
+
+START_TEST(precision_float_2) {
+  char expected[SIZE];
+  char actual[SIZE];
+
+  char *format = "Hello World %.f";
+  float dataOutput = 777.45;
 
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
@@ -396,7 +411,7 @@ START_TEST(precision_big_float) {
   char actual[SIZE];
 
   char *format = "Hello World %.f";
-  float dataOutput = 355.3456789;
+  float dataOutput = 777.3456789;
 
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
@@ -470,7 +485,7 @@ START_TEST(zero_float) {
   char expected[SIZE];
   char actual[SIZE];
 
-  char *format = "Hello World %0d";
+  char *format = "Hello World %0f";
   float dataOutput = 5.5;
 
   int expectedInt = sprintf(expected, format, dataOutput);
@@ -485,7 +500,7 @@ START_TEST(zero_big_float) {
   char expected[SIZE];
   char actual[SIZE];
 
-  char *format = "Hello World %0d";
+  char *format = "Hello World %0f";
   float dataOutput = 355.3456789;
 
   int expectedInt = sprintf(expected, format, dataOutput);
@@ -500,8 +515,8 @@ START_TEST(zero_precision_float) {
   char expected[SIZE];
   char actual[SIZE];
 
-  char *format = "Hello World %.0d";
-  float dataOutput = 355.3456789;
+  char *format = "Hello World %.0f";
+  float dataOutput = 777.3456789;
 
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
@@ -571,6 +586,21 @@ START_TEST(l_small_float) {
 }
 END_TEST
 
+START_TEST(long_width_float) {
+  char expected[SIZE];
+  char actual[SIZE];
+
+  char *format = "Hello World %-20f";
+  float dataOutput = 5.456;
+
+  int expectedInt = sprintf(expected, format, dataOutput);
+  int actualInt = s21_sprintf(actual, format, dataOutput);
+
+  ck_assert_str_eq(expected, actual);
+  ck_assert_int_eq(expectedInt, actualInt);
+}
+END_TEST
+
 Suite *suiteSprintf_float(void) {
   Suite *s = suite_create("suite_sprintf_float");
   TCase *tc = tcase_create("tc_sprintf_float");
@@ -601,6 +631,7 @@ Suite *suiteSprintf_float(void) {
   tcase_add_test(tc, space_float);
   tcase_add_test(tc, space_minus_float);
   tcase_add_test(tc, precision_float);
+  tcase_add_test(tc, precision_float_2);
   tcase_add_test(tc, precision_big_float);
   tcase_add_test(tc, precision4_float);
   tcase_add_test(tc, precision4_big_float);
@@ -613,6 +644,7 @@ Suite *suiteSprintf_float(void) {
   tcase_add_test(tc, l_float);
   tcase_add_test(tc, h_big_float);
   tcase_add_test(tc, l_small_float);
+  tcase_add_test(tc, long_width_float);
 
   suite_add_tcase(s, tc);
   return s;

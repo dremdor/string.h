@@ -1,4 +1,4 @@
-#include "s21_string.h"
+#include "../s21_string.h"
 
 typedef struct {
   int spec_on;
@@ -20,6 +20,9 @@ void str_from_int(char *buffer, int *buffer_index, int number);
 void str_from_double(char *buffer, int *buffer_index, double number,
                      Specs specs);
 void add_spaces_to_int(char *buffer, Specs specs);
+void str_from_unsigned_int(char *buffer, int *buffer_index,
+                           unsigned int number);
+void parse_unsigned_int(char *buffer, unsigned int number, Specs specs);
 
 int s21_sprintf(char *str, const char *format, ...) {
   va_list args;
@@ -46,8 +49,13 @@ int s21_sprintf(char *str, const char *format, ...) {
       s21_strncpy(str + print_index, buffer, s21_strlen(buffer));
       print_index += s21_strlen(buffer);
       specs.spec_on = 0;
-    } else if ((format[i] == 'd' || format[i] == 'u' || format[i] == 'i') && specs.spec_on == 1) {
+    } else if (format[i] == 'd' && specs.spec_on == 1) {
       parse_int(buffer, va_arg(args, int), specs);
+      s21_strncpy(str + print_index, buffer, s21_strlen(buffer));
+      print_index += s21_strlen(buffer);
+      specs.spec_on = 0;
+    } else if (format[i] == 'u' && specs.spec_on == 1) {
+      parse_unsigned_int(buffer, va_arg(args, unsigned int), specs);
       s21_strncpy(str + print_index, buffer, s21_strlen(buffer));
       print_index += s21_strlen(buffer);
       specs.spec_on = 0;
@@ -117,6 +125,19 @@ void parse_int(char *buffer, int number, Specs specs) {
   add_spaces_to_int(buffer, specs);
 }
 
+void parse_unsigned_int(char *buffer, unsigned int number, Specs specs) {
+  int buffer_index = 0;
+  str_from_unsigned_int(buffer, &buffer_index, number);
+  if (specs.width > (int)s21_strlen(buffer) && specs.minus == 1) {
+    for (int i = s21_strlen(buffer); i < specs.width; ++i) {
+      buffer[buffer_index] = ' ';
+      ++buffer_index;
+    }
+  }
+  buffer[buffer_index] = '\0';
+  add_spaces_to_int(buffer, specs);
+}
+
 void add_spaces_to_int(char *buffer, Specs specs) {
   char temp[SIZE] = "";
   int place_index = 0;
@@ -162,6 +183,28 @@ void str_from_int(char *buffer, int *buffer_index, int number) {
   }
 }
 
+void str_from_unsigned_int(char *buffer, int *buffer_index,
+                           unsigned int number) {
+  if (number == 0) {
+    buffer[*buffer_index] = '0';
+    ++(*buffer_index);
+    buffer[*buffer_index] = '\0';
+  } else {
+    char p[50] = "";
+    int index = 0;
+    while (number != 0) {
+      p[index] = (number % 10) + '0';
+      number /= 10;
+      ++index;
+    }
+    for (int i = index - 1; i >= 0; --i) {
+      buffer[*buffer_index] = p[i];
+      ++(*buffer_index);
+    }
+    buffer[*buffer_index] = '\0';
+  }
+}
+
 void str_from_double(char *buffer, int *buffer_index, double number,
                      Specs specs) {
   if (number < 0) {
@@ -172,8 +215,10 @@ void str_from_double(char *buffer, int *buffer_index, double number,
   int unit = (int)number;
   double div = number - unit;
   str_from_int(buffer, buffer_index, unit);
-  buffer[*buffer_index] = '.';
-  ++(*buffer_index);
+  if (specs.precision != 0) {
+    buffer[*buffer_index] = '.';
+    ++(*buffer_index);
+  }
   int precision = 6;
   if (specs.precision != -1) precision = specs.precision;
   for (int i = 0; i < precision; ++i) {
@@ -183,7 +228,6 @@ void str_from_double(char *buffer, int *buffer_index, double number,
     ++(*buffer_index);
     div -= digit;
   }
-
   if ((int)(div * 10) >= 5) {
     int i = *buffer_index - 1;
     while (i >= 0 && buffer[i] == '9') {
@@ -200,6 +244,7 @@ void str_from_double(char *buffer, int *buffer_index, double number,
       ++(*buffer_index);
     }
   }
+
   buffer[*buffer_index] = '\0';
 }
 
@@ -250,7 +295,9 @@ void parse_string(char *buffer, const char *string, Specs specs) {
       ++buffer_index;
     }
   }
-  s21_strncpy(buffer + buffer_index, string, s21_strlen(string));
+  int precision = s21_strlen(string);
+  if (specs.precision != -1) precision = specs.precision;
+  s21_strncpy(buffer + buffer_index, string, precision);
   buffer_index += (int)s21_strlen(string);
   if (specs.width > (int)s21_strlen(string) && specs.minus == 1) {
     for (int i = (int)s21_strlen(string); i < specs.width; ++i) {

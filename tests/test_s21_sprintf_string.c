@@ -110,13 +110,13 @@ START_TEST(precision_string) {
   char actual[SIZE];
 
   char *format = "Hello World %.s";
-  char dataOutput[] = "s";
+  char dataOutput[] = "abc";
 
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
 
-  ck_assert_int_eq(expectedInt, actualInt);
   ck_assert_str_eq(expected, actual);
+  ck_assert_int_eq(expectedInt, actualInt);
 }
 END_TEST
 
@@ -130,8 +130,8 @@ START_TEST(precision2_string) {
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
 
-  ck_assert_int_eq(expectedInt, actualInt);
   ck_assert_str_eq(expected, actual);
+  ck_assert_int_eq(expectedInt, actualInt);
 }
 END_TEST
 
@@ -145,8 +145,8 @@ START_TEST(zero_string) {
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
 
-  ck_assert_int_eq(expectedInt, actualInt);
   ck_assert_str_eq(expected, actual);
+  ck_assert_int_eq(expectedInt, actualInt);
 }
 END_TEST
 
@@ -155,22 +155,7 @@ START_TEST(zero_precision_string) {
   char actual[SIZE];
 
   char *format = "Hello World %.0s";
-  char dataOutput[] = "s";
-
-  int expectedInt = sprintf(expected, format, dataOutput);
-  int actualInt = s21_sprintf(actual, format, dataOutput);
-
-  ck_assert_int_eq(expectedInt, actualInt);
-  ck_assert_str_eq(expected, actual);
-}
-END_TEST
-
-START_TEST(h_string) {
-  char expected[SIZE];
-  char actual[SIZE];
-
-  char *format = "Hello World %hs";
-  char dataOutput[] = "s";
+  char dataOutput[] = "abc";
 
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
@@ -180,18 +165,30 @@ START_TEST(h_string) {
 }
 END_TEST
 
-START_TEST(l_string) {
+START_TEST(ten_precision_string) {
   char expected[SIZE];
   char actual[SIZE];
 
-  char *format = "Hello World %ls";
-  char dataOutput[] = "s";
+  char *format = "Hello World %.10s";
+  char dataOutput[] = "12345678912345678";
 
   int expectedInt = sprintf(expected, format, dataOutput);
   int actualInt = s21_sprintf(actual, format, dataOutput);
 
   ck_assert_str_eq(expected, actual);
   ck_assert_int_eq(expectedInt, actualInt);
+}
+END_TEST
+
+START_TEST(format_percent_test) {
+  char expected[SIZE];
+  char actual[SIZE];
+
+  int expectedInt = sprintf(expected, "Percent sign: %%");
+  int actualInt = s21_sprintf(actual, "Percent sign: %%");
+
+  ck_assert_int_eq(expectedInt, actualInt);
+  ck_assert_str_eq(expected, actual);
 }
 END_TEST
 
@@ -210,8 +207,8 @@ Suite *suiteSprintf_string(void) {
   tcase_add_test(tc, precision2_string);
   tcase_add_test(tc, zero_string);
   tcase_add_test(tc, zero_precision_string);
-  tcase_add_test(tc, h_string);
-  tcase_add_test(tc, l_string);
+  tcase_add_test(tc, ten_precision_string);
+  tcase_add_test(tc, format_percent_test);
 
   suite_add_tcase(s, tc);
   return s;

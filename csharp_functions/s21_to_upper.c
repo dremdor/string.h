@@ -1,4 +1,4 @@
-#include "../string_functions/s21_string.h"
+#include "../s21_string.h"
 
 void *s21_to_upper(const char *str) {
   s21_size_t str_len = s21_strlen(str);
